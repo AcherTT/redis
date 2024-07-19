@@ -2780,6 +2780,7 @@ void initServer(void) {
 
     luaEnvInit();
     scriptingInit(1);
+    jsRuntimeInit();
     if (functionsInit() == C_ERR) {
         serverPanic("Functions initialization failed, check the server logs.");
         exit(1);

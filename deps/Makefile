@@ -103,6 +103,12 @@ lua: .make-prerequisites
 
 .PHONY: lua
 
+quickjs: .make-prerequisites
+	@printf '%b %b\n' $(MAKECOLOR)MAKE$(ENDCOLOR) $(BINCOLOR)$@$(ENDCOLOR)
+	cd quickjs && $(MAKE)
+
+.PHONY: quickjs
+
 JEMALLOC_CFLAGS=$(CFLAGS)
 JEMALLOC_LDFLAGS=$(LDFLAGS)
 

@@ -5491,6 +5491,33 @@ struct COMMAND_STRUCT FUNCTION_Subcommands[] = {
 #define FUNCTION_Keyspecs NULL
 #endif
 
+/********** JSEVAL ********************/
+
+#ifndef SKIP_CMD_HISTORY_TABLE
+/* JSEVAL history */
+#define JSEVAL_History NULL
+#endif
+
+#ifndef SKIP_CMD_TIPS_TABLE
+/* JSEVAL tips */
+#define JSEVAL_Tips NULL
+#endif
+
+#ifndef SKIP_CMD_KEY_SPECS_TABLE
+/* JSEVAL key specs */
+keySpec JSEVAL_Keyspecs[1] = {
+{"We cannot tell how the keys will be used so we assume the worst, RW and UPDATE",CMD_KEY_RW|CMD_KEY_ACCESS|CMD_KEY_UPDATE,KSPEC_BS_INDEX,.bs.index={2},KSPEC_FK_KEYNUM,.fk.keynum={0,1,1}}
+};
+#endif
+
+/* JSEVAL argument table */
+struct COMMAND_ARG JSEVAL_Args[] = {
+{MAKE_ARG("script",ARG_TYPE_STRING,-1,NULL,NULL,NULL,CMD_ARG_NONE,0,NULL)},
+{MAKE_ARG("numkeys",ARG_TYPE_INTEGER,-1,NULL,NULL,NULL,CMD_ARG_NONE,0,NULL)},
+{MAKE_ARG("key",ARG_TYPE_KEY,0,NULL,NULL,NULL,CMD_ARG_OPTIONAL|CMD_ARG_MULTIPLE,0,NULL)},
+{MAKE_ARG("arg",ARG_TYPE_STRING,-1,NULL,NULL,NULL,CMD_ARG_OPTIONAL|CMD_ARG_MULTIPLE,0,NULL)},
+};
+
 /********** SCRIPT DEBUG ********************/
 
 #ifndef SKIP_CMD_HISTORY_TABLE
@@ -11099,6 +11126,7 @@ struct COMMAND_STRUCT redisCommandTable[] = {
 {MAKE_CMD("fcall","Invokes a function.","Depends on the function that is executed.","7.0.0",CMD_DOC_NONE,NULL,NULL,"scripting",COMMAND_GROUP_SCRIPTING,FCALL_History,0,FCALL_Tips,0,fcallCommand,-3,CMD_NOSCRIPT|CMD_SKIP_MONITOR|CMD_MAY_REPLICATE|CMD_NO_MANDATORY_KEYS|CMD_STALE,ACL_CATEGORY_SCRIPTING,FCALL_Keyspecs,1,functionGetKeys,4),.args=FCALL_Args},
 {MAKE_CMD("fcall_ro","Invokes a read-only function.","Depends on the function that is executed.","7.0.0",CMD_DOC_NONE,NULL,NULL,"scripting",COMMAND_GROUP_SCRIPTING,FCALL_RO_History,0,FCALL_RO_Tips,0,fcallroCommand,-3,CMD_NOSCRIPT|CMD_SKIP_MONITOR|CMD_NO_MANDATORY_KEYS|CMD_STALE|CMD_READONLY,ACL_CATEGORY_SCRIPTING,FCALL_RO_Keyspecs,1,functionGetKeys,4),.args=FCALL_RO_Args},
 {MAKE_CMD("function","A container for function commands.","Depends on subcommand.","7.0.0",CMD_DOC_NONE,NULL,NULL,"scripting",COMMAND_GROUP_SCRIPTING,FUNCTION_History,0,FUNCTION_Tips,0,NULL,-2,0,0,FUNCTION_Keyspecs,0,NULL,0),.subcommands=FUNCTION_Subcommands},
+{MAKE_CMD("jseval","Executes a server-side js script.","Depends on the script that is executed.","8.0.0",CMD_DOC_NONE,NULL,NULL,"scripting",COMMAND_GROUP_SCRIPTING,JSEVAL_History,0,JSEVAL_Tips,0,jsEvalCommand,-3,CMD_NOSCRIPT|CMD_SKIP_MONITOR|CMD_MAY_REPLICATE|CMD_NO_MANDATORY_KEYS|CMD_STALE,ACL_CATEGORY_SCRIPTING,JSEVAL_Keyspecs,1,evalGetKeys,4),.args=JSEVAL_Args},
 {MAKE_CMD("script","A container for Lua scripts management commands.","Depends on subcommand.","2.6.0",CMD_DOC_NONE,NULL,NULL,"scripting",COMMAND_GROUP_SCRIPTING,SCRIPT_History,0,SCRIPT_Tips,0,NULL,-2,0,0,SCRIPT_Keyspecs,0,NULL,0),.subcommands=SCRIPT_Subcommands},
 /* sentinel */
 {MAKE_CMD("sentinel","A container for Redis Sentinel commands.","Depends on subcommand.","2.8.4",CMD_DOC_NONE,NULL,NULL,"sentinel",COMMAND_GROUP_SENTINEL,SENTINEL_History,0,SENTINEL_Tips,0,NULL,-2,CMD_ADMIN|CMD_SENTINEL|CMD_ONLY_SENTINEL,0,SENTINEL_Keyspecs,0,NULL,0),.subcommands=SENTINEL_Subcommands},

@@ -3460,6 +3460,7 @@ int redis_check_aof_main(int argc, char **argv);
 
 /* Scripting */
 void scriptingInit(int setup);
+void jsRuntimeInit(void);
 int ldbRemoveChild(pid_t pid);
 void ldbKillForkedSessions(void);
 int ldbPendingChildren(void);
@@ -3763,6 +3764,7 @@ void evalCommand(client *c);
 void evalRoCommand(client *c);
 void evalShaCommand(client *c);
 void evalShaRoCommand(client *c);
+void jsEvalCommand(client *c);
 void scriptCommand(client *c);
 void fcallCommand(client *c);
 void fcallroCommand(client *c);
